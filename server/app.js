@@ -3,10 +3,16 @@ const express = require("express");
 const app = express();
 const port = 5000;
 
+// Middleware
+const middleware = (req, res, next) => {
+    console.log("hello my middleware");
+    next();
+};
+
 app.get("/", (req, res) => {
     res.send("Hello world from the server");
 });
-app.get("/about", (req, res) => {
+app.get("/about", middleware, (req, res) => {
     console.log("hello about");
     res.send("Hello About world form the server");
 });
