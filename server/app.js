@@ -1,8 +1,11 @@
+const dotenv = require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
 
-const DB =
-    "mongodb+srv://kancha:kancha123@cluster0.emuie.mongodb.net/mernstack?retryWrites=true&w=majority";
+dotenv.config({ path: "./config.env" });
+
+const DB = process.env.DATABASE;
+const PORT = process.env.PORT;
 
 mongoose
     .connect(DB, {
@@ -17,7 +20,6 @@ mongoose
     .catch((err) => console.log("Database connection failed", err));
 
 const app = express();
-const port = 5000;
 
 // Middleware
 const middleware = (req, res, next) => {
@@ -43,6 +45,6 @@ app.get("/signup", (req, res) => {
     res.send("Hello Register world from the server");
 });
 
-app.listen(port, () => {
-    console.log(`server is running at port no ${port}`);
+app.listen(PORT, () => {
+    console.log(`server is running at port no ${PORT}`);
 });
