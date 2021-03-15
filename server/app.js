@@ -1,4 +1,20 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
+const DB =
+    "mongodb+srv://kancha:kancha123@cluster0.emuie.mongodb.net/mernstack?retryWrites=true&w=majority";
+
+mongoose
+    .connect(DB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+    })
+    .then(() => {
+        console.log("mongoDB connection successfully");
+    })
+    .catch((err) => console.log("Database connection failed", err));
 
 const app = express();
 const port = 5000;
