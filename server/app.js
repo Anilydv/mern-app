@@ -7,6 +7,13 @@ dotenv.config({ path: "./config.env" });
 require("./db/conn");
 //  const User = require("./model/userSchema")
 
+// use middleware to understand our app in json format
+// convert json data into object and display
+app.use(express.json());
+
+// we link the router files to make our route easy
+app.use(require("./router/auth"));
+
 const PORT = process.env.PORT;
 
 // Middleware
@@ -15,9 +22,10 @@ const middleware = (req, res, next) => {
     next();
 };
 
-app.get("/", (req, res) => {
-    res.send("Hello world from the server");
-});
+// app.get("/", (req, res) => {
+//     res.send("Hello world from the server");
+// });
+
 app.get("/about", middleware, (req, res) => {
     console.log("hello about");
     res.send("Hello About world form the server");
