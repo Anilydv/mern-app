@@ -7,8 +7,7 @@ dotenv.config({ path: "./config.env" });
 require("./db/conn");
 //  const User = require("./model/userSchema")
 
-// use middleware to understand our app in json format
-// convert json data into object and display
+// use middleware to understand our app in json format(convert json data into object and display)
 app.use(express.json());
 
 // we link the router files to make our route easy
