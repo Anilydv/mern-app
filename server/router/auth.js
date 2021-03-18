@@ -1,4 +1,5 @@
 const express = require("express");
+const { findOne } = require("../model/userSchema");
 const router = express.Router();
 
 // require("../db/conn");
@@ -41,6 +42,25 @@ router.post("/register", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+});
+
+// login route
+
+router.post("/signin", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            res.status(400).json({ error: "plz filled the data" });
+        }
+
+        const userLogin = await User.findOne({ email: email });
+
+        if (!userLogin) {
+            res.status(400).json({ error: "user error" });
+        } else {
+            res.status(200).json({ message: "user signin successfully" });
+        }
+    } catch (error) {}
 });
 
 module.exports = router;
