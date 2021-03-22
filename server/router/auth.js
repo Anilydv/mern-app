@@ -23,22 +23,24 @@ router.post("/register", async (req, res) => {
 
         if (userExist) {
             return res.status(422).json({ error: "Email already exist" });
+        } else if (password != cpassword) {
+            return res.status(422).json({ error: "password are not matching" });
+        } else {
+            const user = new User({
+                name,
+                email,
+                phone,
+                work,
+                password,
+                cpassword,
+            });
+
+            await user.save();
+
+            res.status(201).json({
+                message: "user registered successfully",
+            });
         }
-
-        const user = new User({
-            name,
-            email,
-            phone,
-            work,
-            password,
-            cpassword,
-        });
-
-        await user.save();
-
-        res.status(201).json({
-            message: "user registered successfully",
-        });
     } catch (error) {
         console.log(error);
     }
@@ -60,7 +62,9 @@ router.post("/signin", async (req, res) => {
         } else {
             res.status(200).json({ message: "user signin successfully" });
         }
-    } catch (error) {}
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports = router;
