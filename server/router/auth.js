@@ -49,7 +49,7 @@ router.post("/register", async (req, res) => {
 
 // login route
 
-router.post("/signin", async (req, res) => {
+router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -64,7 +64,7 @@ router.post("/signin", async (req, res) => {
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid Credientials" });
             } else {
-                res.status(200).json({ message: "User Signin Successfully" });
+                res.status(200).json({ message: "User Login Successfully" });
             }
         } else {
             res.status(400).json({ error: "Invalid Credientials" });
