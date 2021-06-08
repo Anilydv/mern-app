@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const router = express.Router();
 
-// require("../db/conn");
+// require("userSchema");
 const User = require("../model/userSchema");
 
 router.get("/", (req, res) => {
@@ -64,7 +64,7 @@ router.post("/signin", async (req, res) => {
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid Credientials" });
             } else {
-                res.status(200).json({ message: "user Signin Successfully" });
+                res.status(200).json({ message: "User Signin Successfully" });
             }
         } else {
             res.status(400).json({ error: "Invalid Credientials" });
