@@ -7,7 +7,12 @@ const router = express.Router();
 const User = require("../model/userSchema");
 
 router.get("/", (req, res) => {
-    res.send("Hello world from the server router js");
+    // let token = "anill";
+    // res.cookie("jwtoken", token, {
+    //     expires: new Date(Date.now() + 25892000000),
+    //     httpOnly: true,
+    // });
+    res.send("Hello world from the server router js hye");
 });
 
 router.post("/register", async (req, res) => {
@@ -60,6 +65,15 @@ router.post("/login", async (req, res) => {
 
         if (userLogin) {
             const isMatch = await bcrypt.compare(password, userLogin.password);
+
+            const token = await userLogin.generateAuthToken();
+            // store jwt token in cookie and expire after 30 days automatically
+            res.cookie("jwtoken", token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true,
+            });
+
+            console.log("jwt", token);
 
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid Credientials" });
