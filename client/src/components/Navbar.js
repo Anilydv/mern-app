@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-} from "reactstrap";
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import logo from "./assests/images/logo.png";
 
 export default function DisplayNavBar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +14,7 @@ export default function DisplayNavBar() {
                     style={{
                         background: "#173e43",
                         color: "white",
-                        padding: "18px 15px",
+                        padding: "6px 15px",
                     }}
                     light
                     dark
@@ -28,13 +22,18 @@ export default function DisplayNavBar() {
                 >
                     <NavLink
                         to="/"
-                        style={{
-                            textDecoration: "none",
-                        }}
+                        style={{ color: "white", textDecoration: "none" }}
                     >
-                        <NavbarBrand style={{ color: "white" }}>
-                            Mern developer
-                        </NavbarBrand>
+                        <img
+                            src={logo}
+                            alt="logo"
+                            style={{
+                                height: "auto",
+                                width: "auto",
+                                maxHeight: "52px",
+                                maxWidth: "225px",
+                            }}
+                        />
                     </NavLink>
                     <NavbarToggler onClick={toggle} />
                     <Collapse
