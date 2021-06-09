@@ -7,19 +7,41 @@ const useStyles = makeStyles(() => ({
         marginTop: "55px",
         marginLeft: "150px",
         marginRight: "150px",
+        "@media only screen and (max-width: 414px)": {
+            marginLeft: "0px!important",
+            marginRight: "0px!important",
+        },
+        "@media only screen and (max-width: 1024px)": {
+            marginLeft: "80px",
+            marginRight: "80px",
+        },
     },
     image: {
         width: "250px",
+    },
+    paper: {
+        "@media only screen and (max-width: 414px)": {
+            boxShadow: "none",
+        },
     },
     papperItem: {
         display: "flex",
         padding: "60px 0px",
         justifyContent: "space-around",
     },
+    inputFieldContainer: {
+        width: "45%",
+        "@media only screen and (max-width: 414px)": {
+            width: "70%",
+        },
+    },
     imageContainer: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        "@media only screen and (max-width: 414px)": {
+            display: "none",
+        },
     },
 }));
 
@@ -27,9 +49,9 @@ export default function Signup() {
     const classes = useStyles();
     return (
         <div className={classes.container}>
-            <Paper elevation={3}>
+            <Paper elevation={3} className={classes.paper}>
                 <div className={classes.papperItem}>
-                    <div style={{ width: "45%" }}>
+                    <div className={classes.inputFieldContainer}>
                         <h4 style={{ fontWeight: 800 }}>Sign up</h4>
                         <form autoComplete="off">
                             <TextField
