@@ -2,9 +2,9 @@ import React from "react";
 import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import signup from "./assests/images/signup.svg";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     container: {
-        marginTop: "55px",
+        marginTop: "30px",
         marginLeft: "150px",
         marginRight: "150px",
         "@media only screen and (max-width: 414px)": {
@@ -43,6 +43,20 @@ const useStyles = makeStyles(() => ({
             display: "none",
         },
     },
+    button: {
+        marginTop: "30px",
+        textTransform: "capitalize",
+        letterSpacing: "3px",
+        width: "100%",
+        fontWeight: 600,
+        "&.MuiButton-root ": {
+            background: theme.palette.primary.light,
+            color: "white",
+        },
+        "&:hover": {
+            background: theme.palette.primary.main,
+        },
+    },
 }));
 
 export default function Signup() {
@@ -58,30 +72,35 @@ export default function Signup() {
                                 id="standard-basic"
                                 fullWidth={true}
                                 label="Name"
+                                style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Email"
                                 fullWidth={true}
+                                style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Phone"
                                 fullWidth={true}
+                                style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Profession"
                                 fullWidth={true}
+                                style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Password"
                                 fullWidth={true}
+                                style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
@@ -90,12 +109,12 @@ export default function Signup() {
                                 fullWidth={true}
                             />
                             <br />
+
                             <Button
                                 variant="contained"
-                                color="primary"
-                                style={{ marginTop: "24px" }}
+                                className={classes.button}
                             >
-                                register
+                                Register
                             </Button>
                         </form>
                     </div>

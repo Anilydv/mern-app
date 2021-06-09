@@ -17,11 +17,14 @@ export default function DisplayNavBar() {
         return (
             <>
                 <Navbar
-                    color="primary"
+                    style={{
+                        background: "#173e43",
+                        color: "white",
+                        padding: "18px 15px",
+                    }}
                     light
                     dark
                     expand="md"
-                    style={{ padding: "10px 15px" }}
                 >
                     <NavLink
                         to="/"
@@ -29,7 +32,9 @@ export default function DisplayNavBar() {
                             textDecoration: "none",
                         }}
                     >
-                        <NavbarBrand>Mern developer</NavbarBrand>
+                        <NavbarBrand style={{ color: "white" }}>
+                            Mern developer
+                        </NavbarBrand>
                     </NavLink>
                     <NavbarToggler onClick={toggle} />
                     <Collapse
@@ -44,7 +49,7 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "12px",
+                                            marginRight: "18px",
                                         }}
                                         to="/"
                                     >
@@ -56,11 +61,11 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "12px",
+                                            marginRight: "18px",
                                         }}
                                         to="/about"
                                     >
-                                        AboutMe
+                                        About
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
@@ -68,7 +73,7 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "12px",
+                                            marginRight: "18px",
                                         }}
                                         to="/contact"
                                     >
@@ -80,7 +85,7 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "12px",
+                                            marginRight: "18px",
                                         }}
                                         to="/login"
                                     >
@@ -92,7 +97,7 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "12px",
+                                            // marginRight: "18px",
                                         }}
                                         to="/signup"
                                     >
