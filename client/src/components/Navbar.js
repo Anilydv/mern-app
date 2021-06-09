@@ -45,7 +45,7 @@ export default function DisplayNavBar() {
                                     <NavLink href="/login">Login</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="/register">Register</NavLink>
+                                    <NavLink href="/signup">Register</NavLink>
                                 </NavItem>
                             </Nav>
                         </div>
