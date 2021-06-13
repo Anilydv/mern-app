@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     imageContainer: {
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        flexDirection: "column",
         "@media only screen and (max-width: 414px)": {
             display: "none",
         },
@@ -124,6 +124,11 @@ export default function Signup() {
                             src={signup}
                             alt="signup"
                         />
+
+                        <h6 style={{ marginTop: " 18px", marginLeft: "55px" }}>
+                            {" "}
+                            I am already register
+                        </h6>
                     </div>
                 </div>
             </Paper>
