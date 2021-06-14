@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Errorpage from "./components/Errorpage";
 import Home from "./components/Home.js";
 import Login from "./components/Login.js";
 import Signup from "./components/Signup.js";
@@ -27,6 +28,9 @@ export default function App() {
                 </Route>
                 <Route path="/signup">
                     <Signup />
+                </Route>
+                <Route>
+                    <Errorpage />
                 </Route>
             </Switch>
         </Router>
