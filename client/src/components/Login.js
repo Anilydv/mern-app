@@ -92,6 +92,7 @@ export default function Login() {
 
                             <TextField
                                 id="standard-basic"
+                                type="password"
                                 label="Password"
                                 fullWidth={true}
                                 style={{ marginBottom: "8px" }}
