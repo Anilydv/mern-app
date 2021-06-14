@@ -48,7 +48,8 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "18px",
+                                            marginRight: "30px",
+                                            fontFamily: "fangsong",
                                         }}
                                         to="/"
                                     >
@@ -60,7 +61,8 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "18px",
+                                            marginRight: "30px",
+                                            fontFamily: "fangsong",
                                         }}
                                         to="/about"
                                     >
@@ -72,7 +74,8 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "18px",
+                                            marginRight: "30px",
+                                            fontFamily: "fangsong",
                                         }}
                                         to="/contact"
                                     >
@@ -84,7 +87,8 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            marginRight: "18px",
+                                            marginRight: "30px",
+                                            fontFamily: "fangsong",
                                         }}
                                         to="/login"
                                     >
@@ -96,7 +100,8 @@ export default function DisplayNavBar() {
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
-                                            // marginRight: "18px",
+                                            marginRight: "10px",
+                                            fontFamily: "fangsong",
                                         }}
                                         to="/signup"
                                     >
