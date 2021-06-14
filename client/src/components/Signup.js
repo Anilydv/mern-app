@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import signup from "./assests/images/signup.svg";
 
@@ -60,7 +60,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signup() {
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        profession: "",
+        password: "",
+        cpassword: "",
+    });
     const classes = useStyles();
+
+    const handleInput = (e) => {
+        let name, value;
+        name = e.target.name;
+        value = e.target.value;
+        setUser({ ...user, [name]: value });
+    };
+
+    const handlePostData = (e) => {
+        e.preventDefault();
+        console.log("hello");
+    };
+
     return (
         <div className={classes.container}>
             <Paper elevation={3} className={classes.paper}>
@@ -71,48 +92,71 @@ export default function Signup() {
                             <TextField
                                 id="standard-basic"
                                 fullWidth={true}
+                                onChange={(e) => handleInput(e)}
                                 label="Name"
+                                name="name"
+                                value={user.name}
                                 style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Email"
+                                name="email"
+                                value={user.email}
                                 fullWidth={true}
+                                onChange={(e) => handleInput(e)}
                                 style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Phone"
+                                type="number"
                                 fullWidth={true}
+                                onChange={(e) => handleInput(e)}
+                                name="phone"
+                                value={user.phone}
                                 style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Profession"
+                                name="profession"
+                                value={user.profession}
                                 fullWidth={true}
+                                onChange={(e) => handleInput(e)}
                                 style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Password"
+                                name="password"
+                                type="password"
+                                value={user.password}
                                 fullWidth={true}
+                                onChange={(e) => handleInput(e)}
                                 style={{ marginBottom: "8px" }}
                             />
                             <br />
                             <TextField
                                 id="standard-basic"
                                 label="Confirm Passsword"
+                                name="cpassword"
+                                type="password"
+                                value={user.cpassword}
                                 fullWidth={true}
+                                onChange={(e) => handleInput(e)}
                             />
                             <br />
 
                             <Button
                                 variant="contained"
                                 className={classes.button}
+                                type="submit"
+                                onClick={handlePostData}
                             >
                                 Register
                             </Button>
