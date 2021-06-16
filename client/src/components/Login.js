@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import login from "./assests/images/login.svg";
 
@@ -61,7 +64,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Login() {
+    const [userLogin, setUserLogin] = useState({ email: "", password: "" });
     const classes = useStyles();
+    const history = useHistory();
+
+    const handleInput = (e) => {
+        let name, value;
+        name = e.target.name;
+        value = e.target.value;
+        setUserLogin({ ...userLogin, [name]: value });
+    };
+
+    const handleSubmit = async () => {
+        const { email, password } = userLogin;
+        const data = {
+            email,
+            password,
+        };
+
+        const handleApiCall = () => {
+            return axios
+                .post("/login", data)
+                .then((res) => res)
+                .catch((err) => {
+                    return err.response;
+                });
+        };
+
+        const resData = await handleApiCall();
+
+        if (resData.status === 400 || !resData) {
+            toast.error("Invalid Credentials");
+            console.log("Login error");
+        } else {
+            toast.success("Login Successful");
+            history.push("/");
+        }
+    };
 
     return (
         <div className={classes.container}>
@@ -86,6 +125,9 @@ export default function Login() {
                             <TextField
                                 id="standard-basic"
                                 label="Email"
+                                name="email"
+                                value={userLogin.email}
+                                onChange={(e) => handleInput(e)}
                                 fullWidth={true}
                                 style={{ marginBottom: "8px" }}
                             />
@@ -94,6 +136,9 @@ export default function Login() {
                                 id="standard-basic"
                                 type="password"
                                 label="Password"
+                                name="password"
+                                value={userLogin.password}
+                                onChange={(e) => handleInput(e)}
                                 fullWidth={true}
                                 style={{ marginBottom: "8px" }}
                             />
@@ -103,6 +148,7 @@ export default function Login() {
                             <Button
                                 variant="contained"
                                 className={classes.button}
+                                onClick={handleSubmit}
                             >
                                 Login In
                             </Button>

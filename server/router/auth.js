@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const authenticate = require("../middleware/authenticate");
 
 const router = express.Router();
 
@@ -86,6 +87,13 @@ router.post("/login", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+});
+
+// about us page
+
+router.get("/about", authenticate, (req, res) => {
+    console.log("hello my about");
+    res.send("hello about world from the server");
 });
 
 module.exports = router;
