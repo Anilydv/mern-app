@@ -1,59 +1,9 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { Button, Container, makeStyles, Paper } from "@material-ui/core";
 import { Form, FormGroup, Input } from "reactstrap";
 const useStyles = makeStyles((theme) => ({
-    // container: {
-    //     marginTop: "130px",
-    //     marginLeft: "150px",
-    //     marginRight: "150px",
-    //     "@media only screen and (max-width: 414px)": {
-    //         marginLeft: "0px!important",
-    //         marginRight: "0px!important",
-    //     },
-    //     "@media only screen and (max-width: 1024px)": {
-    //         marginLeft: "80px",
-    //         marginRight: "80px",
-    //     },
-    // },
-    // image: {
-    //     width: "250px",
-    // },
-
-    // papperItem: {
-    //     display: "flex",
-    //     padding: "60px 0px",
-    //     justifyContent: "space-around",
-    // },
-    // inputFieldContainer: {
-    //     width: "45%",
-    //     "@media only screen and (max-width: 414px)": {
-    //         width: "70%",
-    //     },
-    // },
-    // imageContainer: {
-    //     // display: "flex",
-    //     // justifyContent: "center",
-    //     // alignItems: "center",
-    //     textAlign: "center",
-    //     "@media only screen and (max-width: 414px)": {
-    //         display: "none",
-    //     },
-    // },
-    // button: {
-    //     marginTop: "30px",
-    //     textTransform: "capitalize",
-    //     letterSpacing: "3px",
-    //     width: "100%",
-    //     fontWeight: 600,
-    //     "&.MuiButton-root ": {
-    //         background: theme.palette.primary.light,
-    //         color: "white",
-    //     },
-    //     "&:hover": {
-    //         background: theme.palette.primary.main,
-    //     },
-    // },
-
     displayInfo: {
         display: "flex",
         justifyContent: "space-around",
@@ -106,44 +56,91 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Contact() {
-    const [screenWidth, setScreenWidth] = useState(false);
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+    });
     const classes = useStyles();
 
-    useEffect(() => {
-        window.addEventListener("resize", () => {
-            const myWidth = window.innerWidth;
-            if (myWidth <= 414) {
-                // console.log("my width :::", myWidth);
-                setScreenWidth(true);
-            } else {
-                setScreenWidth(false);
-            }
-        });
-    }, [screenWidth]);
+    const handleApiCall = () => {
+        return axios
+            .get("/getData", {
+                withCredentials: true,
+            })
+            .then((res) => res)
+            .catch((err) => {
+                return err.response;
+            });
+    };
 
-    const displayInfo = () => {
-        return (
-            <div className={classes.displayInfo}>
-                <Paper elevation={3} className={classes.infoBoxPapper}>
-                    <h5 className={classes.titleHeader}>
-                        Phone {screenWidth ? ":" : ""}{" "}
-                    </h5>
-                    <h5 className={classes.subTitle}>9819997153</h5>
-                </Paper>
-                <Paper elevation={3} className={classes.infoBoxPapper}>
-                    <h5 className={classes.titleHeader}>
-                        Email {screenWidth ? ":" : ""}{" "}
-                    </h5>
-                    <h6 className={classes.subTitle}>anil@gmail.com</h6>
-                </Paper>
-                <Paper elevation={3} className={classes.infoBoxPapper}>
-                    <h5 className={classes.titleHeader}>
-                        Address {screenWidth ? ":" : ""}{" "}
-                    </h5>
-                    <h6 className={classes.subTitle}>Biratnagar</h6>
-                </Paper>
-            </div>
-        );
+    const callContactPage = async () => {
+        try {
+            const res = await handleApiCall();
+
+            setUserData(res.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        callContactPage();
+    }, []);
+
+    // const displayInfo = () => {
+    //     return (
+    //         <div className={classes.displayInfo}>
+    //             <Paper elevation={3} className={classes.infoBoxPapper}>
+    //                 <h5 className={classes.titleHeader}>Phone</h5>
+    //                 <h5 className={classes.subTitle}>9819997153</h5>
+    //             </Paper>
+    //             <Paper elevation={3} className={classes.infoBoxPapper}>
+    //                 <h5 className={classes.titleHeader}>Email</h5>
+    //                 <h6 className={classes.subTitle}>anil@gmail.com</h6>
+    //             </Paper>
+    //             <Paper elevation={3} className={classes.infoBoxPapper}>
+    //                 <h5 className={classes.titleHeader}>Address</h5>
+    //                 <h6 className={classes.subTitle}>Biratnagar</h6>
+    //             </Paper>
+    //         </div>
+    //     );
+    // };
+
+    const handleInput = (e) => {
+        let name, value;
+        name = e.target.name;
+        value = e.target.value;
+
+        setUserData({ ...userData, [name]: value });
+    };
+
+    const handleSubmit = async () => {
+        const { name, email, phone, message } = userData;
+
+        const data = {
+            name,
+            email,
+            phone,
+            message,
+        };
+
+        const handleApiCall = () => {
+            return axios
+                .post("/contact", data)
+                .then((res) => res)
+                .catch((err) => {
+                    return err.response;
+                });
+        };
+        const resData = await handleApiCall();
+
+        if (resData.status === 422 || !resData) {
+            toast.error("please fillout the form");
+        } else {
+            toast.success("message send successfull");
+        }
     };
 
     const contactInputField = () => {
@@ -173,6 +170,8 @@ export default function Contact() {
                                     name="name"
                                     id="name"
                                     placeholder="Name"
+                                    onChange={(e) => handleInput(e)}
+                                    value={userData.name}
                                 />
                             </FormGroup>
                             <FormGroup>
@@ -181,26 +180,36 @@ export default function Contact() {
                                     name="email"
                                     id="email"
                                     placeholder="Email"
+                                    onChange={(e) => handleInput(e)}
+                                    value={userData.email}
                                 />
                             </FormGroup>
                             <FormGroup>
                                 <Input
                                     type="number"
-                                    name="number"
+                                    name="phone"
                                     id="number"
                                     placeholder="Number"
+                                    onChange={(e) => handleInput(e)}
+                                    value={userData.phone}
                                 />
                             </FormGroup>
                         </div>
                         <FormGroup style={{ margin: "30px 65px" }}>
                             <Input
                                 type="textarea"
-                                name="textarea"
+                                name="message"
                                 id="textarea"
                                 placeholder="Message"
+                                onChange={(e) => handleInput(e)}
+                                value={userData.message}
                             />
                         </FormGroup>
-                        <Button variant="contained" className={classes.button}>
+                        <Button
+                            variant="contained"
+                            className={classes.button}
+                            onClick={handleSubmit}
+                        >
                             Send Message
                         </Button>
                     </Form>
@@ -211,7 +220,6 @@ export default function Contact() {
 
     return (
         <Container maxWidth="md" style={{ marginTop: "50px" }}>
-            {displayInfo()}
             {contactInputField()}
         </Container>
     );

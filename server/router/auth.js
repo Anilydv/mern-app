@@ -74,7 +74,7 @@ router.post("/login", async (req, res) => {
                 httpOnly: true,
             });
 
-            console.log("jwt", token);
+            // console.log("jwt", token);
 
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid Credientials" });
@@ -94,6 +94,37 @@ router.post("/login", async (req, res) => {
 router.get("/about", authenticate, (req, res) => {
     console.log("hello my about");
     res.send(req.user);
+});
+
+router.get("/getData", authenticate, (req, res) => {
+    console.log("hello my about");
+    res.send(req.user);
+});
+
+// contact us page
+
+router.post("/contact", authenticate, async (req, res) => {
+    try {
+        const { name, email, phone, message } = req.body;
+
+        if (!name || !email || !phone || !message) {
+            return res
+                .status(422)
+                .json({ error: "Plz filled all the field properly" });
+        }
+
+        const userContact = await User.findOne({ _id: req.userID });
+
+        if (userContact) {
+            await userContact.addMessage(name, email, phone, message);
+            await userContact.save();
+            res.status(201).json({
+                message: "message sent successfully",
+            });
+        }
+    } catch (error) {
+        console.log("contact error", error);
+    }
 });
 
 module.exports = router;
