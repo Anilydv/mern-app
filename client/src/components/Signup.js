@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import signup from "./assests/images/signup.svg";
 
@@ -64,11 +67,12 @@ export default function Signup() {
         name: "",
         email: "",
         phone: "",
-        profession: "",
+        work: "",
         password: "",
         cpassword: "",
     });
     const classes = useStyles();
+    const history = useHistory();
 
     const handleInput = (e) => {
         let name, value;
@@ -77,9 +81,37 @@ export default function Signup() {
         setUser({ ...user, [name]: value });
     };
 
-    const handlePostData = (e) => {
+    const handlePostData = async (e) => {
         e.preventDefault();
-        console.log("hello");
+        const { name, email, phone, work, password, cpassword } = user;
+
+        const userData = {
+            name,
+            email,
+            phone,
+            work,
+            password,
+            cpassword,
+        };
+
+        const handleApiCall = () => {
+            return axios
+                .post("/register", userData)
+                .then((res) => res)
+                .catch((err) => {
+                    return err.response;
+                });
+        };
+
+        const resData = await handleApiCall();
+
+        if (resData.status === 422) {
+            toast.error("Invalid Registration");
+            console.log("Registration error");
+        } else {
+            toast.success("Registration Successful");
+            history.push("/login");
+        }
     };
 
     return (
@@ -123,8 +155,8 @@ export default function Signup() {
                             <TextField
                                 id="standard-basic"
                                 label="Profession"
-                                name="profession"
-                                value={user.profession}
+                                name="work"
+                                value={user.work}
                                 fullWidth={true}
                                 onChange={(e) => handleInput(e)}
                                 style={{ marginBottom: "8px" }}
