@@ -93,7 +93,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/about", authenticate, (req, res) => {
     console.log("hello my about");
-    res.send("hello about world from the server");
+    res.send(req.user);
 });
 
 module.exports = router;
