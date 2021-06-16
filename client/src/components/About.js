@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Table } from "reactstrap";
 import {
     Button,
@@ -63,6 +66,50 @@ const useStyles = makeStyles((theme) => ({
 export default function About() {
     const [showAbout, setShowAbout] = useState(true);
     const classes = useStyles();
+
+    const handleApiCall = () => {
+        return axios
+            .get("/about", {
+                withCredentials: true,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => res)
+            .catch((err) => {
+                return err.response;
+            });
+    };
+
+    const callAboutPage = async () => {
+        // try {
+        //     const res = await handleApiCall();
+        //     console.log(res);
+        // } catch (error) {
+        //     console.log(error);
+        // }
+
+        try {
+            const res = await fetch("/about", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+
+            const data = await res.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        callAboutPage();
+    }, []);
 
     return (
         <div className={classes.root}>
