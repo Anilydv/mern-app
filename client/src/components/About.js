@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 export default function About() {
     const [showAbout, setShowAbout] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [userData, setUserData] = useState("");
     const classes = useStyles();
     const history = useHistory();
 
@@ -89,7 +90,8 @@ export default function About() {
                 console.log("Unauthorized user");
             } else {
                 setLoading(true);
-                console.log("authorized user");
+                // console.log("authorized user", res.data);
+                setUserData(res.data);
             }
         } catch (error) {
             console.log(error);
@@ -122,13 +124,7 @@ export default function About() {
                                 }}
                             >
                                 <Typography gutterBottom variant="subtitle1">
-                                    WORK Link
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                >
-                                    Developer
+                                    WORK LINK
                                 </Typography>
                                 <Typography
                                     variant="body2"
@@ -140,7 +136,7 @@ export default function About() {
                                     variant="body2"
                                     color="textSecondary"
                                 >
-                                    Youtube
+                                    Developer
                                 </Typography>
                             </div>
                         </Grid>
@@ -157,10 +153,10 @@ export default function About() {
                                         gutterBottom
                                         variant="subtitle1"
                                     >
-                                        anil kumar yadav
+                                        {userData.name}
                                     </Typography>
                                     <Typography variant="body2" gutterBottom>
-                                        web Developer
+                                        {userData.work}
                                     </Typography>
                                     <Typography
                                         variant="body2"
@@ -189,29 +185,27 @@ export default function About() {
                                                 <tbody>
                                                     <tr>
                                                         <td>User Id</td>
-                                                        <td>
-                                                            3489129082349841
-                                                        </td>
+                                                        <td>{userData._id}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Name</td>
-                                                        <td>
-                                                            Anil Kumar Yadav
-                                                        </td>
+                                                        <td>{userData.name}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Email</td>
                                                         <td>
-                                                            anilkumar@gmail.com
+                                                            {userData.email}
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Phone</td>
-                                                        <td>9819997153</td>
+                                                        <td>
+                                                            {userData.phone}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Profession</td>
-                                                        <td>Web Developer</td>
+                                                        <td>{userData.work}</td>
                                                     </tr>
                                                 </tbody>
                                             </Table>
