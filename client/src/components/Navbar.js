@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
 import { NavLink, useHistory } from "react-router-dom";
 import logo from "./assests/images/logo.png";
+import { UserContext } from "../App";
 
 export default function DisplayNavBar() {
     const [isOpen, setIsOpen] = useState(false);
+    const { state, dispatch } = useContext(UserContext);
+
     const toggle = () => setIsOpen(!isOpen);
     const history = useHistory();
 
@@ -21,6 +24,7 @@ export default function DisplayNavBar() {
     const handleLogout = async () => {
         try {
             await handleApiLogout();
+            dispatch({ type: "USER", payload: false });
             history.push("/login");
         } catch (error) {
             console.log(error);
@@ -102,45 +106,49 @@ export default function DisplayNavBar() {
                                         Contact
                                     </NavLink>
                                 </NavItem>
-
-                                <NavItem>
-                                    <NavLink
-                                        style={{
-                                            color: "#e7eaea",
-                                            textDecoration: "none",
-                                            marginRight: "30px",
-                                            fontFamily: "fangsong",
-                                        }}
-                                        to="/login"
-                                    >
-                                        Login
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
+                                {state ? (
+                                    <NavItem
                                         style={{
                                             color: "#e7eaea",
                                             textDecoration: "none",
                                             marginRight: "10px",
                                             fontFamily: "fangsong",
+                                            cursor: "pointer",
                                         }}
-                                        to="/signup"
+                                        onClick={handleLogout}
                                     >
-                                        Register
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem
-                                    style={{
-                                        color: "#e7eaea",
-                                        textDecoration: "none",
-                                        marginRight: "10px",
-                                        fontFamily: "fangsong",
-                                        cursor: "pointer",
-                                    }}
-                                    onClick={handleLogout}
-                                >
-                                    Logout
-                                </NavItem>
+                                        Logout
+                                    </NavItem>
+                                ) : (
+                                    <>
+                                        <NavItem>
+                                            <NavLink
+                                                style={{
+                                                    color: "#e7eaea",
+                                                    textDecoration: "none",
+                                                    marginRight: "30px",
+                                                    fontFamily: "fangsong",
+                                                }}
+                                                to="/login"
+                                            >
+                                                Login
+                                            </NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink
+                                                style={{
+                                                    color: "#e7eaea",
+                                                    textDecoration: "none",
+                                                    marginRight: "10px",
+                                                    fontFamily: "fangsong",
+                                                }}
+                                                to="/signup"
+                                            >
+                                                Register
+                                            </NavLink>
+                                        </NavItem>
+                                    </>
+                                )}
                             </Nav>
                         </div>
                     </Collapse>

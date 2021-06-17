@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import login from "./assests/images/login.svg";
+
+import { UserContext } from "../App";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
     const [userLogin, setUserLogin] = useState({ email: "", password: "" });
+    const { state, dispatch } = useContext(UserContext);
     const classes = useStyles();
     const history = useHistory();
 
@@ -97,6 +100,7 @@ export default function Login() {
             toast.error("Invalid Credentials");
             console.log("Login error");
         } else {
+            dispatch({ type: "USER", payload: true });
             toast.success("Login Successful");
             history.push("/");
         }
