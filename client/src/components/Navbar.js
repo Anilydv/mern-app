@@ -1,11 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import logo from "./assests/images/logo.png";
 
 export default function DisplayNavBar() {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
+    const history = useHistory();
+
+    const handleApiLogout = () => {
+        return axios
+            .get("/logout")
+            .then((res) => res)
+            .catch((err) => {
+                return err.response;
+            });
+    };
+
+    const handleLogout = async () => {
+        try {
+            await handleApiLogout();
+            history.push("/login");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const navMenu = () => {
         return (
@@ -82,6 +102,7 @@ export default function DisplayNavBar() {
                                         Contact
                                     </NavLink>
                                 </NavItem>
+
                                 <NavItem>
                                     <NavLink
                                         style={{
@@ -107,6 +128,18 @@ export default function DisplayNavBar() {
                                     >
                                         Register
                                     </NavLink>
+                                </NavItem>
+                                <NavItem
+                                    style={{
+                                        color: "#e7eaea",
+                                        textDecoration: "none",
+                                        marginRight: "10px",
+                                        fontFamily: "fangsong",
+                                        cursor: "pointer",
+                                    }}
+                                    onClick={handleLogout}
+                                >
+                                    Logout
                                 </NavItem>
                             </Nav>
                         </div>
