@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import login from "./assests/images/login.svg";
@@ -117,10 +117,17 @@ export default function Login() {
                             alt="login"
                         />
                         <br />
-                        <h6 style={{ marginTop: " 18px", marginLeft: "55px" }}>
-                            {" "}
-                            Create an Account
-                        </h6>
+                        <Link to="/signup">
+                            <h6
+                                style={{
+                                    marginTop: " 18px",
+                                    marginLeft: "55px",
+                                }}
+                            >
+                                {" "}
+                                Create an Account
+                            </h6>
+                        </Link>
                     </div>
 
                     <div className={classes.inputFieldContainer}>

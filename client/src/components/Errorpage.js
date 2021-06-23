@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -50,9 +51,16 @@ export default function Errorpage() {
                 >
                     WE ARE SORRY, PAGE NOT FOUND!
                 </h2>
-                <Button variant="contained" className={classes.button}>
-                    Back To Homepage
-                </Button>
+                <Link
+                    to="/"
+                    style={{
+                        textDecoration: "none",
+                    }}
+                >
+                    <Button variant="contained" className={classes.button}>
+                        Back To Homepage
+                    </Button>
+                </Link>
             </div>
         </div>
     );

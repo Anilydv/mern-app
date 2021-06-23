@@ -11,7 +11,7 @@ import {
     Typography,
     ButtonBase,
 } from "@material-ui/core";
-import pic from "./assests/images/IMG_4105.JPG";
+import pic from "./assests/images/profile2.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {
