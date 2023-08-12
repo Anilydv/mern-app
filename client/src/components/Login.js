@@ -8,165 +8,161 @@ import login from "./assests/images/login.svg";
 import { UserContext } from "../App";
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        marginTop: "130px",
-        marginLeft: "150px",
-        marginRight: "150px",
-        "@media only screen and (max-width: 414px)": {
-            marginLeft: "0px!important",
-            marginRight: "0px!important",
-        },
-        "@media only screen and (max-width: 1024px)": {
-            marginLeft: "80px",
-            marginRight: "80px",
-        },
+  container: {
+    marginTop: "130px",
+    marginLeft: "150px",
+    marginRight: "150px",
+    "@media only screen and (max-width: 414px)": {
+      marginLeft: "0px!important",
+      marginRight: "0px!important",
     },
-    image: {
-        width: "250px",
+    "@media only screen and (max-width: 1024px)": {
+      marginLeft: "80px",
+      marginRight: "80px",
     },
-    paper: {
-        "@media only screen and (max-width: 414px)": {
-            boxShadow: "none",
-        },
+  },
+  image: {
+    width: "250px",
+  },
+  paper: {
+    "@media only screen and (max-width: 414px)": {
+      boxShadow: "none",
     },
-    papperItem: {
-        display: "flex",
-        padding: "60px 0px",
-        justifyContent: "space-around",
+  },
+  papperItem: {
+    display: "flex",
+    padding: "60px 0px",
+    justifyContent: "space-around",
+  },
+  inputFieldContainer: {
+    width: "45%",
+    "@media only screen and (max-width: 414px)": {
+      width: "70%",
     },
-    inputFieldContainer: {
-        width: "45%",
-        "@media only screen and (max-width: 414px)": {
-            width: "70%",
-        },
+  },
+  imageContainer: {
+    // display: "flex",
+    // justifyContent: "center",
+    // alignItems: "center",
+    textAlign: "center",
+    "@media only screen and (max-width: 414px)": {
+      display: "none",
     },
-    imageContainer: {
-        // display: "flex",
-        // justifyContent: "center",
-        // alignItems: "center",
-        textAlign: "center",
-        "@media only screen and (max-width: 414px)": {
-            display: "none",
-        },
+  },
+  button: {
+    marginTop: "30px",
+    textTransform: "capitalize",
+    letterSpacing: "3px",
+    width: "100%",
+    fontWeight: 600,
+    "&.MuiButton-root ": {
+      background: theme.palette.primary.light,
+      color: "white",
     },
-    button: {
-        marginTop: "30px",
-        textTransform: "capitalize",
-        letterSpacing: "3px",
-        width: "100%",
-        fontWeight: 600,
-        "&.MuiButton-root ": {
-            background: theme.palette.primary.light,
-            color: "white",
-        },
-        "&:hover": {
-            background: theme.palette.primary.main,
-        },
+    "&:hover": {
+      background: theme.palette.primary.main,
     },
+  },
 }));
 
 export default function Login() {
-    const [userLogin, setUserLogin] = useState({ email: "", password: "" });
-    const { state, dispatch } = useContext(UserContext);
-    const classes = useStyles();
-    const history = useHistory();
+  const [userLogin, setUserLogin] = useState({ email: "", password: "" });
+  const { dispatch } = useContext(UserContext);
+  const classes = useStyles();
+  const history = useHistory();
 
-    const handleInput = (e) => {
-        let name, value;
-        name = e.target.name;
-        value = e.target.value;
-        setUserLogin({ ...userLogin, [name]: value });
+  const handleInput = (e) => {
+    let name, value;
+    name = e.target.name;
+    value = e.target.value;
+    setUserLogin({ ...userLogin, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    const { email, password } = userLogin;
+    const data = {
+      email,
+      password,
     };
 
-    const handleSubmit = async () => {
-        const { email, password } = userLogin;
-        const data = {
-            email,
-            password,
-        };
-
-        const handleApiCall = () => {
-            return axios
-                .post("/login", data)
-                .then((res) => res)
-                .catch((err) => {
-                    return err.response;
-                });
-        };
-
-        const resData = await handleApiCall();
-
-        if (resData.status === 400 || !resData) {
-            toast.error("Invalid Credentials");
-            console.log("Login error");
-        } else {
-            dispatch({ type: "USER", payload: true });
-            toast.success("Login Successful");
-            history.push("/");
-        }
+    const handleApiCall = () => {
+      return axios
+        .post("/login", data)
+        .then((res) => res)
+        .catch((err) => {
+          return err.response;
+        });
     };
 
-    return (
-        <div className={classes.container}>
-            <Paper elevation={3} className={classes.paper}>
-                <div className={classes.papperItem}>
-                    <div className={classes.imageContainer}>
-                        <img
-                            className={classes.image}
-                            src={login}
-                            alt="login"
-                        />
-                        <br />
-                        <Link to="/signup">
-                            <h6
-                                style={{
-                                    marginTop: " 18px",
-                                    marginLeft: "55px",
-                                }}
-                            >
-                                {" "}
-                                Create an Account
-                            </h6>
-                        </Link>
-                    </div>
+    const resData = await handleApiCall();
 
-                    <div className={classes.inputFieldContainer}>
-                        <h4 style={{ fontWeight: 800 }}>Login In</h4>
-                        <form autoComplete="off">
-                            <TextField
-                                id="standard-basic"
-                                label="Email"
-                                name="email"
-                                value={userLogin.email}
-                                onChange={(e) => handleInput(e)}
-                                fullWidth={true}
-                                style={{ marginBottom: "8px" }}
-                            />
+    if (resData.status === 400 || !resData) {
+      toast.error("Invalid Credentials");
+      console.log("Login error");
+    } else {
+      dispatch({ type: "USER", payload: true });
+      toast.success("Login Successful");
+      history.push("/");
+    }
+  };
 
-                            <TextField
-                                id="standard-basic"
-                                type="password"
-                                label="Password"
-                                name="password"
-                                value={userLogin.password}
-                                onChange={(e) => handleInput(e)}
-                                fullWidth={true}
-                                style={{ marginBottom: "8px" }}
-                            />
+  return (
+    <div className={classes.container}>
+      <Paper elevation={3} className={classes.paper}>
+        <div className={classes.papperItem}>
+          <div className={classes.imageContainer}>
+            <img className={classes.image} src={login} alt="login" />
+            <br />
+            <Link to="/signup">
+              <h6
+                style={{
+                  marginTop: " 18px",
+                  marginLeft: "55px",
+                }}
+              >
+                {" "}
+                Create an Account
+              </h6>
+            </Link>
+          </div>
 
-                            <br />
+          <div className={classes.inputFieldContainer}>
+            <h4 style={{ fontWeight: 800 }}>Login In</h4>
+            <form autoComplete="off">
+              <TextField
+                id="standard-basic"
+                label="Email"
+                name="email"
+                value={userLogin.email}
+                onChange={(e) => handleInput(e)}
+                fullWidth={true}
+                style={{ marginBottom: "8px" }}
+              />
 
-                            <Button
-                                variant="contained"
-                                className={classes.button}
-                                onClick={handleSubmit}
-                            >
-                                Login In
-                            </Button>
-                        </form>
-                    </div>
-                </div>
-            </Paper>
+              <TextField
+                id="standard-basic"
+                type="password"
+                label="Password"
+                name="password"
+                value={userLogin.password}
+                onChange={(e) => handleInput(e)}
+                fullWidth={true}
+                style={{ marginBottom: "8px" }}
+              />
+
+              <br />
+
+              <Button
+                variant="contained"
+                className={classes.button}
+                onClick={handleSubmit}
+              >
+                Login In
+              </Button>
+            </form>
+          </div>
         </div>
-    );
+      </Paper>
+    </div>
+  );
 }
